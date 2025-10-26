@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import pickle
@@ -14,6 +14,25 @@ car = pd.read_csv("Cleaned_Car.csv")
 @app.route("/predict", methods=["GET"])
 def predictGet():
     return "<h1> This is POST route </h1>"
+
+
+@app.route("/getDropDownData", methods=["GET"])
+def getDropDownData():
+    companies = sorted(car["company"].unique())
+    car_models = sorted(car["name"].unique())
+    years = sorted(car["year"].unique(), reverse=True)
+    fuel_types = sorted(car["fuel_type"].unique())
+    kms_min = int(car["kms_driven"].min())
+    kms_max = int(car["kms_driven"].max())
+    response = {
+        "companies": companies,
+        "models": car_models,
+        "fuel_types": fuel_types,
+        "years": years,
+        "kms_min": kms_min,
+        "kms_max": kms_max,
+    }
+    return jsonify(response), 200
 
 
 @app.route("/predict", methods=["POST"])
