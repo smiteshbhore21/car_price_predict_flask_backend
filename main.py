@@ -18,10 +18,10 @@ def predictGet():
 
 @app.route("/getDropDownData", methods=["GET"])
 def getDropDownData():
-    companies = sorted(car["company"].unique())
-    car_models = sorted(car["name"].unique())
-    years = sorted(car["year"].unique(), reverse=True)
-    fuel_types = sorted(car["fuel_type"].unique())
+    companies = sorted(car["company"].unique().tolist())
+    car_models = sorted(car["name"].unique().tolist())
+    years = sorted(car["year"].unique().tolist(), reverse=True)
+    fuel_types = sorted(car["fuel_type"].unique().tolist())
     kms_min = int(car["kms_driven"].min())
     kms_max = int(car["kms_driven"].max())
     response = {
